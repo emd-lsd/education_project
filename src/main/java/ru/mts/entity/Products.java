@@ -29,7 +29,7 @@ public class Products {
     // Метод для посчёта общей суммы покпки со скидкой и без неё
     public static void calculateTotal(Products product){
 
-        if(product.amount <= 0 || product.price <= 0 || product.discount <=0 || product.discount > 100){
+        if(product.amount <= 0 || product.price <= 0 || product.discount <0 || product.discount > 100){
             System.out.println("Некорректные данные. Стоимость товара и количество должны быть больше 0. Скидка должна быть в диапазоне от 0 до 100");
             System.exit(0);
         }
