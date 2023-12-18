@@ -1,24 +1,25 @@
 package ru.mts.service;
 
-import ru.mts.entity.Products;
+import ru.mts.animals.CreateAnimalService;
+import ru.mts.animals.CreateAnimalServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        // Создание новых объектов товаров
+        // Вызов дефолтного метода
+        CreateAnimalService createAnimalService = new CreateAnimalService() {
+            @Override
+            public void createAnimals() {
+                CreateAnimalService.super.createAnimals();
+            }
+        };
+        createAnimalService.createAnimals();
 
-        Products prod1 = new Products(5, 200, 0.75);
-        Products prod2 = new Products(30, 33, 42.575);
-        Products prod3 = new Products(3, 10, 59.1);
-        Products prod4 = new Products(0, 15, 101);
+        // Вызов метода из имплемента
+        CreateAnimalServiceImpl createAnimalServiceimpl = new CreateAnimalServiceImpl();
+        createAnimalServiceimpl.createAnimals();
 
-
-        // Расчёт общей суммы товаров для объектов
-        Products.calculateTotal(prod1);
-        Products.calculateTotal(prod2);
-        Products.calculateTotal(prod3);
-        //Products.calculateTotal(prod4);
-
-        Products.calculateTotal(null);
+        // Вызов метода из имплемента для N животных
+        createAnimalServiceimpl.createAnimals(20);
 
 
 
