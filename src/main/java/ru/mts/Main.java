@@ -1,4 +1,4 @@
-package ru.mts.service;
+package ru.mts;
 
 import ru.mts.animals.CreateAnimalService;
 import ru.mts.animals.CreateAnimalServiceImpl;

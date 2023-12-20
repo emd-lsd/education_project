@@ -15,11 +15,11 @@ import java.util.Random;
  */
 public interface CreateAnimalService {
 
-    String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
-    String[] Characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
 
     // Дефолтный метод создания 10 уникальных животных через цикл While
     default void createAnimals() {
+        String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
+        String[] Characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
         Random random = new Random();
         int count = 0;
         AbstractAnimal ourAnimal;

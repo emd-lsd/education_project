@@ -14,6 +14,8 @@ import java.util.Random;
  * Так же этот метод перегружен введением атрибута целого числа - желаемого числа создаваемых животных
  */
 public class CreateAnimalServiceImpl implements CreateAnimalService {
+    final String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
+    final String[] Characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
 
     //Перегруженный метод создания животных по заданному целому числу
     public void createAnimals(int amount) {
