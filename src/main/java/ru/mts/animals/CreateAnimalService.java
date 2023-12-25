@@ -3,8 +3,7 @@ package ru.mts.animals;
 import ru.mts.animals.pet.*;
 import ru.mts.animals.predator.*;
 
-import java.math.BigDecimal;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * Интерфейс CreateAnimalService задает функционал создания животных
@@ -15,7 +14,7 @@ import java.util.Random;
  */
 public interface CreateAnimalService {
 
-
+/*
     // Дефолтный метод создания 10 уникальных животных через цикл While
     default void createAnimals() {
         String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
@@ -93,6 +92,8 @@ public interface CreateAnimalService {
         }
         System.out.println("\nВывод из интерфейса\n");
     }
+*/
+    ArrayList<Animal> create(int n);
 
     // Метод генерации домашних животных
     Pet generatePet();

@@ -8,6 +8,7 @@ import ru.mts.animals.predator.Predator;
 public class Main {
     public static void main(String[] args) {
         // Вызов дефолтного метода c помощью анонимного класса
+        /*
         CreateAnimalService createAnimalService = new CreateAnimalService() {
             @Override
             public void createAnimals() {
@@ -32,7 +33,10 @@ public class Main {
 
         // Вызов метода из имплемента для N животных
         createAnimalServiceimpl.createAnimals(20);
-
+*/
+        CreateAnimalServiceImpl createAnimalService = new CreateAnimalServiceImpl();
+        //createAnimalService.create(10);
+        createAnimalService.createAnimals(5);
 
     }
 }
