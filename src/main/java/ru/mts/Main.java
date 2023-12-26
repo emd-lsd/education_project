@@ -12,11 +12,6 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // Массив для проверки животных для дубликат
-        ArrayList<Animal> testDuplicate = new ArrayList<>();
-        testDuplicate.add(new Cat("kit", new BigDecimal("250.00"), "Злой", LocalDate.of(2018, 5, 15)));
-        testDuplicate.add(new Cat("kit", new BigDecimal("250.00"), "Злой", LocalDate.of(2018, 5, 15)));
-
         // Массив для проверки методов на null
         ArrayList<Animal> testNull = new ArrayList<>();
         testNull.add(new Cat("kit", new BigDecimal("250.00"), "Злой", LocalDate.of(2018, 5, 15)));
@@ -41,10 +36,9 @@ public class Main {
         }
         System.out.println("Животные старше N лет\n");
 
+        // Дублирование массива
+        animals.addAll(animals);
         ArrayList<Animal> duplicates = searchService.findDuplicate(animals);
-        for (Animal element : testDuplicate) {
-            System.out.println(element.getName());
-        }
         System.out.println("Дубликаты животных\n");
 
 

@@ -78,19 +78,19 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     protected static String generateName() {
         Random random = new Random();
-        // Генерация случайных имени, стоимости, поведения
+        // Генерация случайного имени
         return Names[random.nextInt(Names.length)];
     }
 
     protected static BigDecimal generateCost() {
         Random random = new Random();
-        // Генерация случайных имени, стоимости, поведения
+        // Генерация случайной стоимости
         return BigDecimal.valueOf(random.nextDouble() * 1000).setScale(2, RoundingMode.HALF_UP);
     }
 
     protected static String generateCharacter() {
         Random random = new Random();
-        // Генерация случайных имени, стоимости, поведения
+        // Генерация случайного поведения
         return Characters[random.nextInt(Characters.length)];
     }
 

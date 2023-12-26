@@ -63,6 +63,7 @@ public class SearchServiceImpl implements SearchService {
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
                 duplicates.add(entry.getKey());
+                System.out.println("Дубликат найден " + entry.getKey().getName());
             }
         }
 
