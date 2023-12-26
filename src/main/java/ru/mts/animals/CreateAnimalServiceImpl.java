@@ -95,7 +95,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     protected static LocalDate generateBirthDay() {
-        // Генерация случайного года от 1950 до 2005 (для предположения, что человек в возрасте от 18 до 70 лет)
+        // Генерация случайного года от 2010 до 2023
         int year = ThreadLocalRandom.current().nextInt(2010, 2023);
 
         // Генерация случайного месяца
