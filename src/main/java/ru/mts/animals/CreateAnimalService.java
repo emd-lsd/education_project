@@ -1,5 +1,6 @@
 package ru.mts.animals;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,7 @@ public interface CreateAnimalService {
             animalFactory = getFactory();
             animal = animalFactory.generateAnimal();
             animals.add(count, animal);
-            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay());
+            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
         }
         System.out.println("\nВывод из интерфейса\n");

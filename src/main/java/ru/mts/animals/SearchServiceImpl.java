@@ -37,6 +37,7 @@ public class SearchServiceImpl implements SearchService {
     public ArrayList<Animal> findOlderAnimal(ArrayList<Animal> animals, int N) {
         ArrayList<Animal> olderAnimals = new ArrayList<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
+        if (N<=0) throw new RuntimeException("Количество лет N должно быть больше 0");
         for (Animal element : animals) {
             Optional.ofNullable(element).orElseThrow(() -> new RuntimeException("В массиве животных найден пустой элемент"));
             if (Math.abs(Period.between(LocalDate.now(), element.getBirthDay()).getYears()) > N)

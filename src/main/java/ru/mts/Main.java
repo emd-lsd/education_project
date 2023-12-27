@@ -8,6 +8,7 @@ import ru.mts.animals.pet.Cat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Main {
@@ -32,7 +33,7 @@ public class Main {
 
         ArrayList<Animal> olderAnimals = searchService.findOlderAnimal(animals, 2);
         for (Animal element : olderAnimals) {
-            System.out.printf("%s %s%n", element.getName(), element.getBirthDay());
+            System.out.printf("%s %s%n", element.getName(), element.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         System.out.println("Животные старше N лет\n");
 

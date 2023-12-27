@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,8 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Добавлены методы генерации параметров для создания животных
  */
 public class CreateAnimalServiceImpl implements CreateAnimalService {
-    static final String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
-    static final String[] Characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
+    static final String[] names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
+    static final String[] characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
 
     /**
      * Перегруженный метод создания животных по заданному целому числу
@@ -31,11 +32,12 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         ArrayList<Animal> animals = new ArrayList<>();
         AnimalFactory animalFactory;
         Animal animal;
+        if (amount <= 0) throw new RuntimeException("Количество животных должно быть натуральным числом");
         for (int i = 0; i < amount; i++) {
             animalFactory = getFactory();
             animal = animalFactory.generateAnimal();
             animals.add(i, animal);
-            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay());
+            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         System.out.println("Вывод N животных из имплемента\n");
         return animals;
@@ -55,7 +57,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             animalFactory = getFactory();
             animal = animalFactory.generateAnimal();
             animals.add(count, animal);
-            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay());
+            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
         } while (count < 10);
         System.out.println("\nВывод 10 животных из имплемента\n");
@@ -79,7 +81,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     protected static String generateName() {
         Random random = new Random();
         // Генерация случайного имени
-        return Names[random.nextInt(Names.length)];
+        return names[random.nextInt(names.length)];
     }
 
     protected static BigDecimal generateCost() {
@@ -91,7 +93,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     protected static String generateCharacter() {
         Random random = new Random();
         // Генерация случайного поведения
-        return Characters[random.nextInt(Characters.length)];
+        return characters[random.nextInt(characters.length)];
     }
 
     protected static LocalDate generateBirthDay() {
