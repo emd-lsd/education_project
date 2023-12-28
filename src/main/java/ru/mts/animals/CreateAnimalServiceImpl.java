@@ -27,7 +27,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @param amount число животных
      * @return animals - массив животных
      */
-    public ArrayList<Animal> createAnimals(int amount) {
+    public Animal[] createAnimals(int amount) {
         Random random = new Random();
         ArrayList<Animal> animals = new ArrayList<>();
         AnimalFactory animalFactory;
@@ -40,7 +40,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         System.out.println("Вывод N животных из имплемента\n");
-        return animals;
+        return animals.toArray(new Animal[0]);
     }
 
     /**
@@ -48,7 +48,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      *
      * @return animals - массив животных
      */
-    public ArrayList<Animal> createAnimals() {
+    public Animal[] createAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
         int count = 0;
         AnimalFactory animalFactory;
@@ -61,7 +61,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             count++;
         } while (count < 10);
         System.out.println("\nВывод 10 животных из имплемента\n");
-        return animals;
+        return animals.toArray(new Animal[0]);
     }
 
     /**
@@ -71,11 +71,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      */
     @Override
     public AnimalFactory getFactory() {
-        Random random = new Random();
-        AnimalFactory animalFactory;
-        if (random.nextInt(2) == 0) animalFactory = new PetCreatorFactory();
-        else animalFactory = new PredatorCreatorFactory();
-        return animalFactory;
+        return new AnimalFactoryImpl();
     }
 
     protected static String generateName() {

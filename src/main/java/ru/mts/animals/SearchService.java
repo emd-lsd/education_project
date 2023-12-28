@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * у которых есть дубликат.
  */
 public interface SearchService {
-    ArrayList<String> findLeapYearName(ArrayList<Animal> animals);
+    String[] findLeapYearName(Animal[] animals);
 
-    ArrayList<Animal> findOlderAnimal(ArrayList<Animal> animals, int N);
+    Animal[] findOlderAnimal(Animal[] animals, int N);
 
-    ArrayList<Animal> findDuplicate(ArrayList<Animal> animals);
+    Animal[] findDuplicate(Animal[] animals);
 }

@@ -18,14 +18,14 @@ public class SearchServiceImpl implements SearchService {
      * @return animalNames - массив имен животных, родившихся в високосный год
      */
     @Override
-    public ArrayList<String> findLeapYearName(ArrayList<Animal> animals) {
+    public String[] findLeapYearName(Animal[] animals) {
         ArrayList<String> animalNames = new ArrayList<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
         for (Animal element : animals) {
             Optional.ofNullable(element).orElseThrow(() -> new RuntimeException("В массиве животных найден пустой элемент"));
             if (element.getBirthDay().isLeapYear()) animalNames.add(element.getName());
         }
-        return animalNames;
+        return animalNames.toArray(new String[0]);
     }
 
     /**
@@ -34,7 +34,7 @@ public class SearchServiceImpl implements SearchService {
      * @return olderAnimals - массив животных, старше N лет
      */
     @Override
-    public ArrayList<Animal> findOlderAnimal(ArrayList<Animal> animals, int N) {
+    public Animal[] findOlderAnimal(Animal[] animals, int N) {
         ArrayList<Animal> olderAnimals = new ArrayList<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
         if (N<=0) throw new RuntimeException("Количество лет N должно быть больше 0");
@@ -43,7 +43,7 @@ public class SearchServiceImpl implements SearchService {
             if (Math.abs(Period.between(LocalDate.now(), element.getBirthDay()).getYears()) > N)
                 olderAnimals.add(element);
         }
-        return olderAnimals;
+        return olderAnimals.toArray(new Animal[0]);
     }
 
     /**
@@ -51,7 +51,7 @@ public class SearchServiceImpl implements SearchService {
      * @return duplicates - массив животных, у которых есть дубликат
      */
     @Override
-    public ArrayList<Animal> findDuplicate(ArrayList<Animal> animals) {
+    public Animal[] findDuplicate(Animal[] animals) {
         ArrayList<Animal> duplicates = new ArrayList<>();
         Map<Animal, Integer> animalCountMap = new HashMap<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
@@ -68,6 +68,6 @@ public class SearchServiceImpl implements SearchService {
             }
         }
 
-        return duplicates;
+        return duplicates.toArray(new Animal[0]);
     }
 }

@@ -13,7 +13,7 @@ public interface CreateAnimalService {
 
 
     // Дефолтный метод создания 10 уникальных животных через цикл While
-    default ArrayList<Animal> createAnimals() {
+    default Animal[] createAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
         int count = 0;
         AnimalFactory animalFactory;
@@ -26,7 +26,7 @@ public interface CreateAnimalService {
             count++;
         }
         System.out.println("\nВывод из интерфейса\n");
-        return animals;
+        return animals.toArray(new Animal[0]);
     }
 
     AnimalFactory getFactory();
