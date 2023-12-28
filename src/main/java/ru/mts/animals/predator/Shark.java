@@ -1,15 +1,17 @@
 package ru.mts.animals.predator;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Shark extends Predator {
     private final static String BREED = "Акула";
 
-    public Shark(String name, BigDecimal cost, String character) {
+    public Shark(String name, BigDecimal cost, String character, LocalDate birthDay) {
         this.breed = BREED;
         this.name = name;
         this.cost = cost;
         this.character = character;
-        getHabits();
+        this.birthDay = birthDay;
+        //getHabits();
     }
 }
