@@ -9,8 +9,4 @@ import ru.mts.animals.AbstractAnimal;
  */
 public abstract class Pet extends AbstractAnimal {
     protected final String HABITS = "домашнее животное "; // повадки
-
-    void getHabits() {
-        System.out.println("Я - " + HABITS);
-    }
 }

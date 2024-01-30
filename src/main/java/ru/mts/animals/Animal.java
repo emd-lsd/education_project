@@ -1,6 +1,7 @@
 package ru.mts.animals;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Интерфейс Animal задает поведение для животных с помощью
@@ -15,4 +16,6 @@ public interface Animal {
     BigDecimal getCost();
 
     String getCharacter();
+
+    LocalDate getBirthDay();
 }

@@ -1,118 +1,109 @@
 package ru.mts.animals;
 
 
-import ru.mts.animals.pet.*;
-import ru.mts.animals.predator.*;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Класс CreateAnimalServiceImpl реализует интерфейс CreateAnimalService.
  * Внутри класса переопределен дефолтный метод интерфейса для реализаиии его через другой цикл
- * с использованием распределенной генерации животных через методы по контракту.
- * Так же этот метод перегружен введением атрибута целого числа - желаемого числа создаваемых животных
+ * с использованием реализованного метода getFactory интерфейса для выбора случайной Фабрики.
+ * Так же этот метод перегружен введением атрибута целого числа - желаемого числа создаваемых животных.
+ * Добавлены методы генерации параметров для создания животных
  */
 public class CreateAnimalServiceImpl implements CreateAnimalService {
-    final String[] Names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
-    final String[] Characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
+    static final String[] names = {"Simba", "Rex", "Whiskers", "Fluffy", "Dumbo", "Jerry", "Tom", "Nemo", "Mikky"}; // клички
+    static final String[] characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
 
-    //Перегруженный метод создания животных по заданному целому числу
-    public void createAnimals(int amount) {
+    /**
+     * Перегруженный метод создания животных по заданному целому числу
+     *
+     * @param amount число животных
+     * @return animals - массив животных
+     */
+    public Animal[] createAnimals(int amount) {
         Random random = new Random();
-        AbstractAnimal ourAnimal;
+        ArrayList<Animal> animals = new ArrayList<>();
+        AnimalFactory animalFactory;
+        Animal animal;
+        if (amount <= 0) throw new RuntimeException("Количество животных должно быть натуральным числом");
         for (int i = 0; i < amount; i++) {
-            if (random.nextInt(2) == 0) ourAnimal = generatePet();
-            else ourAnimal = generatePredator();
-            System.out.println("Животное " + ourAnimal.getBreed() + " по кличке " + ourAnimal.getName() + " с характером " + ourAnimal.getCharacter() + " стоимостью " + ourAnimal.getCost() + " создано.");
+            animalFactory = getFactory();
+            animal = animalFactory.generateAnimal();
+            animals.add(i, animal);
+            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
-        System.out.println("\nВывод " + amount + " животных из имплемента\n");
+        System.out.println("Вывод N животных из имплемента\n");
+        return animals.toArray(new Animal[0]);
     }
 
-    // Переопределенный метод создания 10 животных через цикл do while
-    @Override
-    public void createAnimals() {
-        Random random = new Random();
+    /**
+     * Переопределенный метод создания 10 животных через цикл do while
+     *
+     * @return animals - массив животных
+     */
+    public Animal[] createAnimals() {
+        ArrayList<Animal> animals = new ArrayList<>();
         int count = 0;
-        AbstractAnimal ourAnimal;
+        AnimalFactory animalFactory;
+        Animal animal;
         do {
-            if (random.nextInt(2) == 0) ourAnimal = generatePet();
-            else ourAnimal = generatePredator();
+            animalFactory = getFactory();
+            animal = animalFactory.generateAnimal();
+            animals.add(count, animal);
+            System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
-            System.out.println("Животное " + ourAnimal.getBreed() + " по кличке " + ourAnimal.getName() + " с характером " + ourAnimal.getCharacter() + " стоимостью " + ourAnimal.getCost() + " создано.");
         } while (count < 10);
         System.out.println("\nВывод 10 животных из имплемента\n");
+        return animals.toArray(new Animal[0]);
     }
 
+    /**
+     * Создает случайную фабрику
+     *
+     * @return случайная фабрика
+     */
     @Override
-    public Pet generatePet() {
-        Random random = new Random();
-        Pet pet;
-
-        // Генерация случайных имени, стоимости, поведения
-        String name = Names[random.nextInt(Names.length)];
-        BigDecimal cost = BigDecimal.valueOf(random.nextDouble() * 1000).setScale(2, BigDecimal.ROUND_HALF_UP);
-        String character = Characters[random.nextInt(Characters.length)];
-
-        switch (random.nextInt(5)) {
-            case 0: {
-                pet = new Cat(name, cost, character);
-                break;
-            }
-            case 1: {
-                pet = new Dog(name, cost, character);
-                break;
-            }
-            case 2: {
-                pet = new Rabbit(name, cost, character);
-                break;
-            }
-            case 3: {
-                pet = new Turtle(name, cost, character);
-                break;
-            }
-            default: {
-                pet = new Hamster(name, cost, character);
-                break;
-            }
-        }
-
-        return pet;
+    public AnimalFactory getFactory() {
+        return new AnimalFactoryImpl();
     }
 
-    @Override
-    public Predator generatePredator() {
+    protected static String generateName() {
         Random random = new Random();
-        Predator predator;
+        // Генерация случайного имени
+        return names[random.nextInt(names.length)];
+    }
 
-        // Генерация случайных имени, стоимости, поведения
-        String name = Names[random.nextInt(Names.length)];
-        BigDecimal cost = BigDecimal.valueOf(random.nextDouble() * 1000).setScale(2, BigDecimal.ROUND_HALF_UP);
-        String character = Characters[random.nextInt(Characters.length)];
+    protected static BigDecimal generateCost() {
+        Random random = new Random();
+        // Генерация случайной стоимости
+        return BigDecimal.valueOf(random.nextDouble() * 1000).setScale(2, RoundingMode.HALF_UP);
+    }
 
-        switch (random.nextInt(5)) {
-            case 0: {
-                predator = new Shark(name, cost, character);
-                break;
-            }
-            case 1: {
-                predator = new Wolf(name, cost, character);
-                break;
-            }
-            case 2: {
-                predator = new Bear(name, cost, character);
-                break;
-            }
-            case 3: {
-                predator = new Fox(name, cost, character);
-                break;
-            }
-            default: {
-                predator = new Tiger(name, cost, character);
-                break;
-            }
-        }
+    protected static String generateCharacter() {
+        Random random = new Random();
+        // Генерация случайного поведения
+        return characters[random.nextInt(characters.length)];
+    }
 
-        return predator;
+    protected static LocalDate generateBirthDay() {
+        // Генерация случайного года от 2010 до 2023
+        int year = ThreadLocalRandom.current().nextInt(2010, 2023);
+
+        // Генерация случайного месяца
+        int monthValue = ThreadLocalRandom.current().nextInt(1, 13);
+        Month month = Month.of(monthValue);
+
+        // Генерация случайного дня в месяце
+        int maxDay = month.length(false); // Получаем количество дней в месяце
+        int day = ThreadLocalRandom.current().nextInt(1, maxDay + 1);
+
+        return LocalDate.of(year, month, day);
     }
 }
