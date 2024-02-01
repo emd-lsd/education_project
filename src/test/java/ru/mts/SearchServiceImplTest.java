@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Проверка на корректность работы методов findLeapYearName, findOlderAnimal, findDuplicate")
 public class SearchServiceImplTest {
 
     private static SearchServiceImpl searchService;
@@ -25,7 +26,7 @@ public class SearchServiceImplTest {
 
 
     @BeforeAll
-    static void beforeAll(){
+    static void beforeAll() {
         searchService = new SearchServiceImpl();
         leapYearTest = new Animal[]{
                 new Cat("Kitty", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10)),
@@ -52,39 +53,38 @@ public class SearchServiceImplTest {
 
     @Test
     @DisplayName("Проверка корректности работы метода findLeapYearName")
-    public void testFindLeapYearName(){
-        String[] resultNames = searchService.findLeapYearName(leapYearTest);
+    public void testFindLeapYearName() {
         String[] expectedNames = new String[]{"Kitty", "Bitty, Broxie"};
+        String[] resultNames = assertDoesNotThrow(() -> searchService.findLeapYearName(leapYearTest));
         assertEquals(Arrays.toString(resultNames), Arrays.toString(expectedNames));
     }
 
     @Test
     @DisplayName("Проверка работы метода findLeapYearName с null")
-    public void testFindLeapYearNameWithNull(){
-        Animal[] arrWithNull = null;
-        assertThrows(RuntimeException.class, ()-> searchService.findLeapYearName(arrWithNull));
+    public void testFindLeapYearNameWithNull() {
+        assertThrows(RuntimeException.class, () -> searchService.findLeapYearName(null));
     }
 
     @Test
     @DisplayName("Проверка работы метода findLeapYearName с пустым массивом")
-    public void testFindLeapYearNameWithEmptyArray(){
+    public void testFindLeapYearNameWithEmptyArray() {
         Animal[] empty = new Animal[]{};
-        String[] resultNames = searchService.findLeapYearName(empty);
+        String[] resultNames = assertDoesNotThrow(() -> searchService.findLeapYearName(empty));
         assertEquals(Arrays.toString(resultNames), "[]");
     }
 
     @Test
     @DisplayName("Проверка работы метода findLeapYearName с пустым элементом в массиве")
-    public void testFindLeapYearNameWithEmptyElement(){
-        assertThrows(RuntimeException.class, ()-> searchService.findLeapYearName(animalsWithNull));
+    public void testFindLeapYearNameWithEmptyElement() {
+        assertThrows(RuntimeException.class, () -> searchService.findLeapYearName(animalsWithNull));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {2, 5, 10, 25})
     @DisplayName("Проверка корректности работы метода")
-    public void testFindOlderAnimal(int val){
-        Animal[] result = searchService.findOlderAnimal(leapYearTest, val);
-        switch (val){
+    public void testFindOlderAnimal(int val) {
+        Animal[] result = assertDoesNotThrow(() -> searchService.findOlderAnimal(leapYearTest, val));
+        switch (val) {
             case 2:
                 assertEquals(4, result.length);
                 break;
@@ -105,44 +105,42 @@ public class SearchServiceImplTest {
 
     @Test
     @DisplayName("Проверка работы метода findOlderAnimal с null массивом")
-    public void testFindOlderAnimalWithNull(){
-        Animal[] arrWithNull = null;
-        assertThrows(RuntimeException.class, ()-> searchService.findOlderAnimal(arrWithNull, 5));
+    public void testFindOlderAnimalWithNull() {
+        assertThrows(RuntimeException.class, () -> searchService.findOlderAnimal(null, 5));
     }
 
     @Test
     @DisplayName("Проверка работы метода findOlderAnimal с пустым элементом в массиве")
-    public void testFindOlderAnimalWithEmptyElement(){
-        assertThrows(RuntimeException.class, ()-> searchService.findOlderAnimal(animalsWithNull, 5));
+    public void testFindOlderAnimalWithEmptyElement() {
+        assertThrows(RuntimeException.class, () -> searchService.findOlderAnimal(animalsWithNull, 5));
     }
 
     @Test
     @DisplayName("Проверка работы метода findOlderAnimal с не положительным числом лет")
-    public void testFindOlderAnimalWithNotNaturalAge(){
-        assertThrows(RuntimeException.class, ()-> searchService.findOlderAnimal(leapYearTest, 0));
-        assertThrows(RuntimeException.class, ()-> searchService.findOlderAnimal(leapYearTest, -1));
+    public void testFindOlderAnimalWithNotNaturalAge() {
+        assertThrows(RuntimeException.class, () -> searchService.findOlderAnimal(leapYearTest, 0));
+        assertThrows(RuntimeException.class, () -> searchService.findOlderAnimal(leapYearTest, -1));
     }
 
     @Test
     @DisplayName("Проверка корректности работы метода findDuplicate")
-    public void testFindDuplicate(){
-        Animal[] result = searchService.findDuplicate(duplicates);
+    public void testFindDuplicate() {
+        Animal[] result = assertDoesNotThrow(() -> searchService.findDuplicate(duplicates));
         assertEquals(2, result.length);
-        result = searchService.findDuplicate(leapYearTest);
+        result = assertDoesNotThrow(() -> searchService.findDuplicate(leapYearTest));
         assertEquals(0, result.length);
     }
 
     @Test
     @DisplayName("Проверка работы метода findDuplicate c массивом null")
-    public void testFindDuplicateWithNullArray(){
-        Animal[] arrWithNull = null;
-        assertThrows(RuntimeException.class, ()-> searchService.findDuplicate(arrWithNull));
+    public void testFindDuplicateWithNullArray() {
+        assertThrows(RuntimeException.class, () -> searchService.findDuplicate(null));
     }
 
     @Test
-    @DisplayName("Проверка работы метода findDuplicate c массивом null")
-    public void testFindDuplicateWithNullElement(){
-        assertThrows(RuntimeException.class, ()-> searchService.findDuplicate(animalsWithNull));
+    @DisplayName("Проверка работы метода findDuplicate c элементом null в заполненном массиве")
+    public void testFindDuplicateWithNullElement() {
+        assertThrows(RuntimeException.class, () -> searchService.findDuplicate(animalsWithNull));
     }
 
 }

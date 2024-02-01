@@ -10,7 +10,10 @@ import ru.mts.animals.predator.Fox;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@DisplayName("Проверки на корректность работы переопределенного метода equals")
 
 public class AbstractAnimalTest {
 
@@ -20,7 +23,7 @@ public class AbstractAnimalTest {
     private static AbstractAnimal dog3;
 
     @BeforeAll
-    static void beforeAll(){
+    static void beforeAll() {
         fox = new Fox("Foxie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10));
         dog = new Dog("Buddie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10));
         dog2 = new Dog("Freddie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10));
@@ -29,31 +32,31 @@ public class AbstractAnimalTest {
 
     @Test
     @DisplayName("Проверка на равенство самому себе")
-    public void testEqualsItself(){
+    public void testEqualsItself() {
         assertTrue(fox.equals(fox));
     }
 
     @Test
     @DisplayName("Проверка на неравенство Null")
-    public void testEqualsNull(){
+    public void testEqualsNull() {
         assertFalse(fox.equals(null));
     }
 
     @Test
     @DisplayName("Проверка на неравенство разных животных")
-    public void testEqualsDifferentType(){
+    public void testEqualsDifferentType() {
         assertFalse(fox.equals(dog));
     }
 
     @Test
     @DisplayName("Проверка на неравенство одинаковых животных с разными атрибутами")
-    public void testEqualsSameTypeDefferentValues(){
+    public void testEqualsSameTypeDefferentValues() {
         assertFalse(dog.equals(dog2));
     }
 
     @Test
     @DisplayName("Проверка на равенство одианковых животных с одинаковыми значениями")
-    public void testEqualsSameTypeSameValues(){
+    public void testEqualsSameTypeSameValues() {
         assertTrue(dog.equals(dog3));
     }
 
