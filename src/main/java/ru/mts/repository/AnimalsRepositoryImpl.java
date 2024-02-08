@@ -1,24 +1,39 @@
-package ru.mts.animals;
+package ru.mts.repository;
 
+import ru.mts.animals.Animal;
+import ru.mts.service.CreateAnimalService;
+
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
- * Класс реализует методы интерфейса по поиску животных: родившихся в високосный год
- * которые старше N лет
- * у которых есть дубликат.
+ * Класс реализует методы репозитория по поиску животных: родившихся в високосный год
+ * которые старше N лет,
+ * у которых есть дубликат,
+ * вывод дубликатов.
  */
-public class SearchServiceImpl implements SearchService {
+public class AnimalsRepositoryImpl implements AnimalsRepository{
+
+    private Animal[] animals;
+    private final CreateAnimalService createAnimalService;
+
+    public AnimalsRepositoryImpl(CreateAnimalService createAnimalService){
+        this.createAnimalService = createAnimalService;
+    }
+
+    @PostConstruct
+    public void init(){
+        animals = createAnimalService.createAnimals();
+    }
+
     /**
-     * @param animals - массив животных
+     *
      * @return animalNames - массив имен животных, родившихся в високосный год
      */
     @Override
-    public String[] findLeapYearName(Animal[] animals) {
+    public String[] findLeapYearNames() {
         ArrayList<String> animalNames = new ArrayList<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
         for (Animal element : animals) {
@@ -29,12 +44,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     /**
-     * @param animals - массив животных
-     * @param N       - количество лет
+     *
+     * @param N количество лет
      * @return olderAnimals - массив животных, старше N лет
      */
     @Override
-    public Animal[] findOlderAnimal(Animal[] animals, int N) {
+    public Animal[] findOlderAnimal(int N) {
         ArrayList<Animal> olderAnimals = new ArrayList<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
         if (N<=0) throw new RuntimeException("Количество лет N должно быть больше 0");
@@ -47,12 +62,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     /**
-     * @param animals - массив животных
+     *
      * @return duplicates - массив животных, у которых есть дубликат
      */
     @Override
-    public Animal[] findDuplicate(Animal[] animals) {
-        ArrayList<Animal> duplicates = new ArrayList<>();
+    public Set<Animal> findDuplicate() {
+        Set<Animal> duplicates = new HashSet<>();
         Map<Animal, Integer> animalCountMap = new HashMap<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Массив животных пуст"));
 
@@ -64,10 +79,21 @@ public class SearchServiceImpl implements SearchService {
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
                 duplicates.add(entry.getKey());
-                System.out.println("Дубликат найден " + entry.getKey().getName());
+                //System.out.println("Дубликат найден " + entry.getKey().getName());
             }
         }
 
-        return duplicates.toArray(new Animal[0]);
+        return duplicates;
+    }
+
+    /**
+     * Выводит на экран дубликаты животных
+     */
+    @Override
+    public void printDuplicate() {
+        Set<Animal> duplicates = findDuplicate();
+        for (Animal animal : duplicates) {
+            System.out.println(animal.getName());
+        }
     }
 }

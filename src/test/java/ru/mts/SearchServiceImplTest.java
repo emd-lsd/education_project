@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.mts.animals.Animal;
-import ru.mts.animals.SearchServiceImpl;
 import ru.mts.animals.pet.Cat;
 import ru.mts.animals.predator.Fox;
 
