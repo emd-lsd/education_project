@@ -24,6 +24,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     static final String[] characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
     private AnimalTypes animalTypes;
 
+    /**
+     * Инициализация AnimalTypes
+     * @param animalTypes
+     */
     public void setAnimalTypes (AnimalTypes animalTypes){
         this.animalTypes = animalTypes;
     }
