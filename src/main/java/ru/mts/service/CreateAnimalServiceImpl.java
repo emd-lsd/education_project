@@ -1,7 +1,10 @@
 package ru.mts.service;
 
 
-import ru.mts.animals.*;
+import ru.mts.animals.Animal;
+import ru.mts.animals.AnimalFactory;
+import ru.mts.animals.AnimalFactoryImpl;
+import ru.mts.animals.AnimalTypes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,9 +29,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     /**
      * Инициализация AnimalTypes
+     *
      * @param animalTypes
      */
-    public void setAnimalTypes (AnimalTypes animalTypes){
+    public void setAnimalTypes(AnimalTypes animalTypes) {
         this.animalTypes = animalTypes;
     }
 
@@ -59,6 +63,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      *
      * @return animals - массив животных
      */
+    @Override
     public Animal[] createAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
         int count = 0;
