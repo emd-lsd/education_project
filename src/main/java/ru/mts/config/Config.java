@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
 import ru.mts.service.CreateAnimalService;
 import ru.mts.service.CreateAnimalServiceImpl;
 
