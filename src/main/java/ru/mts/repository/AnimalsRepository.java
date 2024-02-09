@@ -1,5 +1,6 @@
 package ru.mts.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.mts.animals.Animal;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
  * у которых есть дубликат.
  * вывод дубликатов животных
  */
+@Repository
 public interface AnimalsRepository {
     String[] findLeapYearNames();
     Animal[] findOlderAnimal(int N);

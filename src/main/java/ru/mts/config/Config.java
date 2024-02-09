@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
 import ru.mts.service.CreateAnimalService;
 import ru.mts.service.CreateAnimalServiceImpl;
 import ru.mts.repository.AnimalsRepository;
@@ -18,8 +19,5 @@ public class Config {
         return new CreateAnimalServiceImpl();
     }
 
-    @Bean
-    public AnimalsRepository animalsRepository(CreateAnimalService createAnimalService){
-        return new AnimalsRepositoryImpl(createAnimalService);
-    }
+
 }

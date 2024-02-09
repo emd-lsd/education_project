@@ -1,5 +1,6 @@
 package ru.mts.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.mts.animals.Animal;
 import ru.mts.service.CreateAnimalService;
 
@@ -14,6 +15,7 @@ import java.util.*;
  * у которых есть дубликат,
  * вывод дубликатов.
  */
+@Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository{
 
     private Animal[] animals;

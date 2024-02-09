@@ -59,6 +59,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      *
      * @return animals - массив животных
      */
+    @Override
     public Animal[] createAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
         int count = 0;
