@@ -31,6 +31,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
     }
 
     /**
+     * Сеттер для ручного ввода животных
+     * @param animals
+     */
+    public void setAnimals(Animal[] animals) {
+        this.animals = animals;
+    }
+
+    /**
      *
      * @return animalNames - массив имен животных, родившихся в високосный год
      */

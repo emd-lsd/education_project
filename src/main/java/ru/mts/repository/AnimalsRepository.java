@@ -13,6 +13,7 @@ import java.util.Set;
  */
 @Repository
 public interface AnimalsRepository {
+    void setAnimals(Animal[] animals);
     String[] findLeapYearNames();
     Animal[] findOlderAnimal(int N);
     Set<Animal> findDuplicate();
