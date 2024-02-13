@@ -1,6 +1,9 @@
 package ru.mts;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.mts.animals.Animal;
 import ru.mts.animals.pet.Cat;
@@ -13,11 +16,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
-
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
         AnimalsRepository animalsRepository = context.getBean(AnimalsRepositoryImpl.class);
+        System.setProperty("console.encoding", "UTF-8");
 
         //вызов findLeapYearNames
         String[] animalNames = animalsRepository.findLeapYearNames();
