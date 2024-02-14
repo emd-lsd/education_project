@@ -3,9 +3,9 @@ package ru.mts;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.mts.animals.AbstractAnimal;
-import ru.mts.animals.pet.Dog;
-import ru.mts.animals.predator.Fox;
+import ru.mtsstarter.animals.AbstractAnimal;
+import ru.mtsstarter.animals.pet.Dog;
+import ru.mtsstarter.animals.predator.Fox;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

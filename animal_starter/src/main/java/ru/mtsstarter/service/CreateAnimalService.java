@@ -1,8 +1,8 @@
-package ru.mts.service;
+package ru.mtsstarter.service;
 
-import ru.mts.animals.Animal;
-import ru.mts.animals.AnimalFactory;
-import ru.mts.animals.AnimalTypes;
+import ru.mtsstarter.animals.Animal;
+import ru.mtsstarter.animals.AnimalFactory;
+import ru.mtsstarter.animals.AnimalTypes;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

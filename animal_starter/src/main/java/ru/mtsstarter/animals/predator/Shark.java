@@ -1,4 +1,4 @@
-package ru.mts.animals.predator;
+package ru.mtsstarter.animals.predator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

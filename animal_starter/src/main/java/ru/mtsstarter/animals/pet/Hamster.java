@@ -1,12 +1,12 @@
-package ru.mts.animals.pet;
+package ru.mtsstarter.animals.pet;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Cat extends Pet {
-    private final static String BREED = "Котик";
+public class Hamster extends Pet {
+    private final static String BREED = "Хомячок";
 
-    public Cat(String name, BigDecimal cost, String character, LocalDate birthDay) {
+    public Hamster(String name, BigDecimal cost, String character, LocalDate birthDay) {
         this.breed = BREED;
         this.name = name;
         this.cost = cost;
@@ -14,6 +14,4 @@ public class Cat extends Pet {
         this.birthDay = birthDay;
         //getHabits();
     }
-
-
 }

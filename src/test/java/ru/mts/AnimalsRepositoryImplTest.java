@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.mts.animals.Animal;
-import ru.mts.config.Config;
+import ru.mtsstarter.animals.Animal;
+import ru.mtsstarter.config.Config;
 import ru.mts.repository.AnimalsRepository;
 
 import java.util.Set;

@@ -1,8 +1,8 @@
 package ru.mts.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.mts.animals.Animal;
-import ru.mts.service.CreateAnimalService;
+import ru.mtsstarter.animals.Animal;
+import ru.mtsstarter.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;

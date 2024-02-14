@@ -1,6 +1,6 @@
-package ru.mts.animals.pet;
+package ru.mtsstarter.animals.pet;
 
-import ru.mts.animals.AbstractAnimal;
+import ru.mtsstarter.animals.AbstractAnimal;
 
 /**
  * Абстрактный класс Pet наследник AbstractAnimal наследует

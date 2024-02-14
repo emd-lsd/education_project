@@ -1,8 +1,9 @@
-package ru.mts.animals;
+package ru.mtsstarter.animals;
 
-import ru.mts.animals.pet.*;
-import ru.mts.animals.predator.*;
-import ru.mts.service.CreateAnimalServiceImpl;
+
+import ru.mtsstarter.animals.pet.*;
+import ru.mtsstarter.animals.predator.*;
+import ru.mtsstarter.service.CreateAnimalServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;

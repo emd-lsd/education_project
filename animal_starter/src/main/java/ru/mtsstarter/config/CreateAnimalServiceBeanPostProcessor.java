@@ -1,10 +1,10 @@
-package ru.mts.config;
+package ru.mtsstarter.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
-import ru.mts.animals.AnimalTypes;
-import ru.mts.service.CreateAnimalServiceImpl;
+import ru.mtsstarter.animals.AnimalTypes;
+import ru.mtsstarter.service.CreateAnimalServiceImpl;
 
 @Configuration
 public class CreateAnimalServiceBeanPostProcessor implements BeanPostProcessor {

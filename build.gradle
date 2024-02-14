@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':animal_starter')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter'
 }

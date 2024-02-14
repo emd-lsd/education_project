@@ -1,6 +1,6 @@
-package ru.mts.animals.predator;
+package ru.mtsstarter.animals.predator;
 
-import ru.mts.animals.AbstractAnimal;
+import ru.mtsstarter.animals.AbstractAnimal;
 
 /**
  * Абстрактный класс Predator наследник AbstractAnimal наследует

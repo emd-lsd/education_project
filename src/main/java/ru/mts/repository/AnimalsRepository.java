@@ -1,7 +1,7 @@
 package ru.mts.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.mts.animals.Animal;
+import ru.mtsstarter.animals.Animal;
 
 import java.util.Set;
 

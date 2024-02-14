@@ -1,4 +1,4 @@
-package ru.mts.animals;
+package ru.mtsstarter.animals;
 
 /**
  * Интерфейс AnimalFactory задает фабрику с методом создания жвиотных
