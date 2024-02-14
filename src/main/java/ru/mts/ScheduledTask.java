@@ -19,7 +19,7 @@ public class ScheduledTask {
     public ScheduledTask(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;
     }
-    @Scheduled(fixedRate = 6000)
+    @Scheduled(fixedRate = 5000)
     public void doTask(){
         //вызов findLeapYearNames
         String[] animalNames = animalsRepository.findLeapYearNames();

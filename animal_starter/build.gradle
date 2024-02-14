@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter:2.7.4'
     implementation 'org.springframework.boot:spring-boot-autoconfigure:2.7.4'
 }
