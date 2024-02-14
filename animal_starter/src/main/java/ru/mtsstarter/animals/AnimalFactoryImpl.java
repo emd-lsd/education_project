@@ -1,6 +1,7 @@
 package ru.mtsstarter.animals;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import ru.mtsstarter.animals.pet.*;
 import ru.mtsstarter.animals.predator.*;
 import ru.mtsstarter.service.CreateAnimalServiceImpl;
@@ -13,6 +14,8 @@ public class AnimalFactoryImpl implements AnimalFactory{
     Random random = new Random();
     // Генерация случайных имени, стоимости, поведения
     private final Map<String, AbstractAnimal> animal = new HashMap<>();
+    @Value("${animal.names}")
+    private String[] animalNames;
 
     public AnimalFactoryImpl() {
         animal.put("HAMSTER", new Hamster(CreateAnimalServiceImpl.generateName(), CreateAnimalServiceImpl.generateCost(), CreateAnimalServiceImpl.generateCharacter(), CreateAnimalServiceImpl.generateBirthDay()));
@@ -35,5 +38,10 @@ public class AnimalFactoryImpl implements AnimalFactory{
         else{
             throw new IllegalArgumentException("AnimalTypes cannot be null");
         }
+    }
+
+    @Override
+    public String[] genName() {
+        return animalNames;
     }
 }

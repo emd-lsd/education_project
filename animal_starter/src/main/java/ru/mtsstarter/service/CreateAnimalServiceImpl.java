@@ -75,6 +75,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             animals.add(count, animal);
             System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
+            System.out.println(animalFactory.genName());
         } while (count < 10);
         System.out.println("\nВывод 10 животных из имплемента\n");
         return animals.toArray(new Animal[0]);
