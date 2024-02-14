@@ -1,6 +1,7 @@
 package ru.mtsstarter.service;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.animals.AnimalFactory;
 import ru.mtsstarter.animals.AnimalFactoryImpl;
@@ -27,6 +28,9 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     static final String[] characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
     private AnimalTypes animalTypes;
 
+    @Value("${names}")
+    private String[] animalNames;
+
     /**
      * Инициализация AnimalTypes
      *
@@ -50,7 +54,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         if (amount <= 0) throw new RuntimeException("Количество животных должно быть натуральным числом");
         for (int i = 0; i < amount; i++) {
             animalFactory = getFactory();
-            animal = animalFactory.generateAnimal(animalTypes);
+            animal = animalFactory.generateAnimal(animalTypes, generateRandomName());
             animals.add(i, animal);
             //System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
@@ -71,11 +75,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         Animal animal;
         do {
             animalFactory = getFactory();
-            animal = animalFactory.generateAnimal(animalTypes);
+            animal = animalFactory.generateAnimal(animalTypes, generateRandomName());
             animals.add(count, animal);
             System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
-            System.out.println(animalFactory.genName());
         } while (count < 10);
         System.out.println("\nВывод 10 животных из имплемента\n");
         return animals.toArray(new Animal[0]);
@@ -122,5 +125,9 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         int day = ThreadLocalRandom.current().nextInt(1, maxDay + 1);
 
         return LocalDate.of(year, month, day);
+    }
+
+    public String generateRandomName(){
+        return animalNames[new Random().nextInt(animalNames.length)];
     }
 }

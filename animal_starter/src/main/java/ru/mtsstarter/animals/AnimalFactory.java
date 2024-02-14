@@ -5,6 +5,5 @@ package ru.mtsstarter.animals;
  */
 public interface AnimalFactory {
 
-    Animal generateAnimal(AnimalTypes animalTypes);
-    String[] genName();
+    Animal generateAnimal(AnimalTypes animalTypes, String name);
 }

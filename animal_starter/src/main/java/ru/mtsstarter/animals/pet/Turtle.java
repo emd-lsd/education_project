@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Turtle extends Pet {
-    private final static String BREED = "Черепаха";
+    private final static String BREED = "Turtle";
 
     public Turtle(String name, BigDecimal cost, String character, LocalDate birthDay) {
         this.breed = BREED;

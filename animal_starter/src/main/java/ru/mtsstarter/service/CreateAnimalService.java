@@ -24,7 +24,7 @@ public interface CreateAnimalService {
         Animal animal;
         while (count < 10) {
             animalFactory = getFactory();
-            animal = animalFactory.generateAnimal(AnimalTypes.DOG);
+            animal = animalFactory.generateAnimal(AnimalTypes.DOG, "Puppy");
             animals.add(count, animal);
             System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;

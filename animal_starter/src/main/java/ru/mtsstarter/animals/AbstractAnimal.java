@@ -42,6 +42,10 @@ public abstract class AbstractAnimal implements Animal {
         return birthDay;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(breed, name, cost, character, birthDay);

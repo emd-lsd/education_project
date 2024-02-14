@@ -18,4 +18,6 @@ public interface Animal {
     String getCharacter();
 
     LocalDate getBirthDay();
+
+    void setName(String name);
 }
