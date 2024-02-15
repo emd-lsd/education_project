@@ -35,16 +35,7 @@ public class ScheduledTask {
         }
         System.out.println("Животные старше N лет\n");
 
-        //вызов findDuplicate
-        Animal[] animals = new Animal[]{
-                new Cat("Kitty", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10)),
-                new Cat("Bitty", BigDecimal.valueOf(15000), "angry", LocalDate.of(2016, 11, 11)),
-                new Fox("Foxie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2015, 10, 10)),
-                new Fox("Broxie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2012, 10, 10)),
-                new Cat("Kitty", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10)),
-                new Fox("Foxie", BigDecimal.valueOf(15000), "calm", LocalDate.of(2015, 10, 10))
-        };
-        animalsRepository.setAnimals(animals);
+        //вызов findDuplicates
         Set<Animal> duplicates = animalsRepository.findDuplicate();
 
         //вызов printDuplicate
