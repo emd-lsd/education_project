@@ -92,7 +92,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      *
      * @return случайное имя из профиля
      */
-    public String generateRandomName() {
+    private String generateRandomName() {
         return animalNames[new Random().nextInt(animalNames.length)];
     }
 }
