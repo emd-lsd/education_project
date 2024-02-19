@@ -1,3 +1,5 @@
+names: Simba,Rex,Whiskers,Fluffy,Dumbo,Jerry,Tom,Nemo,Mikky
+
 logging:
   level:
     root: info

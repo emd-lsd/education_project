@@ -1,4 +1,4 @@
-package ru.mts;
+package ru.mts.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -9,7 +9,6 @@ import ru.mts.repository.AnimalsRepositoryImpl;
 import ru.mtsstarter.service.CreateAnimalService;
 
 @TestConfiguration
-@ActiveProfiles("test")
 public class TestConfig {
     @Autowired
     CreateAnimalService createAnimalService;
