@@ -93,6 +93,11 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @return случайное имя из профиля
      */
     private String generateRandomName() {
-        return animalNames[new Random().nextInt(animalNames.length)];
+        if(animalNames != null){
+            return animalNames[new Random().nextInt(animalNames.length)];
+        }
+        else{
+            throw new IllegalArgumentException("Массив имен пуст");
+        }
     }
 }
