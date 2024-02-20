@@ -15,6 +15,7 @@ import ru.mtsstarter.service.CreateAnimalServiceImpl;
 import java.lang.reflect.Field;
 
 @SpringBootTest(classes = Config.class)
+@DisplayName("Тесты стартер-модуля проекта")
 public class StarterTest {
     @Autowired
     private CreateAnimalService createAnimalService;

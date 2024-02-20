@@ -22,6 +22,7 @@ import java.util.Set;
 
 @SpringBootTest()
 @ActiveProfiles("test")
+@DisplayName("Тесты основного функционала проекта")
 public class AnimalsRepositoryTest {
     @Autowired
     AnimalsRepository animalsRepository;
