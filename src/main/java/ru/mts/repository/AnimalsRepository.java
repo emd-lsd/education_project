@@ -11,7 +11,6 @@ import java.util.Set;
  * у которых есть дубликат.
  * вывод дубликатов животных
  */
-@Repository
 public interface AnimalsRepository {
     void setAnimals(Animal[] animals);
     String[] findLeapYearNames();

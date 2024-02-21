@@ -1,24 +1,21 @@
 package ru.mts;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import ru.mts.repository.AnimalsRepository;
-import ru.mts.repository.AnimalsRepositoryImpl;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.animals.pet.Cat;
 import ru.mtsstarter.animals.predator.Fox;
-
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Set;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest()
 @ActiveProfiles("test")
@@ -28,8 +25,9 @@ public class AnimalsRepositoryTest {
     AnimalsRepository animalsRepository;
     private static Animal[] leapYearTest;
     private static Animal[] duplicates;
-    @BeforeEach
-    public void init(){
+
+    @BeforeAll
+    public static void init() {
         leapYearTest = new Animal[]{
                 new Cat("Kitty", BigDecimal.valueOf(15000), "calm", LocalDate.of(2020, 10, 10)),
                 new Cat("Bitty", BigDecimal.valueOf(15000), "angry", LocalDate.of(2016, 11, 11)),
@@ -69,13 +67,14 @@ public class AnimalsRepositoryTest {
 
     @Test
     @DisplayName("Тест на обработку пустого значения в животных")
-    public void testFindDuplicateOnNullException(){
+    public void testFindDuplicateOnNullException() {
         animalsRepository.setAnimals(null);
         assertThrows(RuntimeException.class, () -> animalsRepository.findDuplicate());
     }
 
     @Test
-    public void test(){
+    @DisplayName("Тест на обработку пустого значения среди животных при вызове метода")
+    public void testFindOlderAnimalOnNullException() {
         animalsRepository.setAnimals(null);
         assertThrows(RuntimeException.class, () -> animalsRepository.findOlderAnimal(3));
     }

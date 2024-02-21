@@ -25,7 +25,7 @@ public class StarterTest {
     @DisplayName("Тест на совпадение количества сгенерированных животных")
     public void testAnimalArrayLength(){
         Animal[] animals = createAnimalService.createAnimals();
-        assertEquals(animals.length, 10);
+        assertEquals(10, animals.length);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class StarterTest {
         String[] testNames = {"Bunny","Billy"};
         animalNamesField.set(animalService, testNames);
         Animal[] animals = animalService.createAnimals();
-        assertEquals(animals[1].getBreed(), "Cat");
+        assertEquals("Cat", animals[1].getBreed());
     }
 
     @Test

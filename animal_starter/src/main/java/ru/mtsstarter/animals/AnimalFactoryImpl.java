@@ -14,10 +14,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AnimalFactoryImpl implements AnimalFactory {
-    Random random = new Random();
     static final String[] characters = {"Brave", "Playful", "Calm", "Curious", "Gentle"}; // поведения
     private final Map<String, AbstractAnimal> animal = new HashMap<>();
-
 
     public AnimalFactoryImpl() {
         animal.put("HAMSTER", new Hamster("", generateCost(), generateCharacter(), generateBirthDay()));

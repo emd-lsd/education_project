@@ -4,11 +4,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mts.repository.AnimalsRepository;
 import ru.mtsstarter.animals.Animal;
-import ru.mtsstarter.animals.pet.Cat;
-import ru.mtsstarter.animals.predator.Fox;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 

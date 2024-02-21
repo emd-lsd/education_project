@@ -12,6 +12,5 @@ public class Tiger extends Predator {
         this.cost = cost;
         this.character = character;
         this.birthDay = birthDay;
-        //getHabits();
     }
 }

@@ -34,6 +34,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
      * Сеттер для ручного ввода животных
      * @param animals - входной массив животных
      */
+    @Override
     public void setAnimals(Animal[] animals) {
         this.animals = animals;
     }
@@ -89,10 +90,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
                 duplicates.add(entry.getKey());
-                //System.out.println("Дубликат найден " + entry.getKey().getName());
             }
         }
-
         return duplicates;
     }
 
