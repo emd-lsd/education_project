@@ -3,11 +3,10 @@ package ru.mtsstarter.config;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import ru.mtsstarter.animals.AnimalTypes;
 import ru.mtsstarter.service.CreateAnimalServiceImpl;
 
-@Component
+@Configuration
 public class CreateAnimalServiceBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
