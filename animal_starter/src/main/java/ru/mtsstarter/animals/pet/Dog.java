@@ -12,8 +12,5 @@ public class Dog extends Pet {
         this.cost = cost;
         this.character = character;
         this.birthDay = birthDay;
-        //getHabits();
     }
-
-
 }

@@ -3,7 +3,6 @@ package ru.mts.repository;
 import org.springframework.stereotype.Repository;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.service.CreateAnimalService;
-
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Period;
@@ -28,14 +27,6 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
     @PostConstruct
     public void init(){
         animals = createAnimalService.createAnimals();
-    }
-
-    /**
-     * Сеттер для ручного ввода животных
-     * @param animals - входной массив животных
-     */
-    public void setAnimals(Animal[] animals) {
-        this.animals = animals;
     }
 
     /**
@@ -89,10 +80,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
                 duplicates.add(entry.getKey());
-                //System.out.println("Дубликат найден " + entry.getKey().getName());
             }
         }
-
         return duplicates;
     }
 

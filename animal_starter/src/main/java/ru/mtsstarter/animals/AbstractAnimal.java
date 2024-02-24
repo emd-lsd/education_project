@@ -42,6 +42,7 @@ public abstract class AbstractAnimal implements Animal {
         return birthDay;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
