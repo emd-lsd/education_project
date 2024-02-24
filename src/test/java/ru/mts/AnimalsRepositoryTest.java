@@ -68,15 +68,19 @@ public class AnimalsRepositoryTest {
 
     @Test
     @DisplayName("Тест на обработку пустого значения в животных")
-    public void testFindDuplicateOnNullException() {
-        animalsRepository.setAnimals(null);
+    public void testFindDuplicateOnNullException() throws NoSuchFieldException, IllegalAccessException {
+        Field animalsField = animalsRepository.getClass().getDeclaredField("animals");
+        animalsField.setAccessible(true);
+        animalsField.set(animalsRepository, null);
         assertThrows(RuntimeException.class, () -> animalsRepository.findDuplicate());
     }
 
     @Test
     @DisplayName("Тест на обработку пустого значения среди животных при вызове метода")
-    public void testFindOlderAnimalOnNullException() {
-        animalsRepository.setAnimals(null);
+    public void testFindOlderAnimalOnNullException() throws NoSuchFieldException, IllegalAccessException {
+        Field animalsField = animalsRepository.getClass().getDeclaredField("animals");
+        animalsField.setAccessible(true);
+        animalsField.set(animalsRepository, null);
         assertThrows(RuntimeException.class, () -> animalsRepository.findOlderAnimal(3));
     }
 }

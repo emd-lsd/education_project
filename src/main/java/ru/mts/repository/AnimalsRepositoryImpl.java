@@ -3,7 +3,6 @@ package ru.mts.repository;
 import org.springframework.stereotype.Repository;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.service.CreateAnimalService;
-
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Period;
@@ -28,15 +27,6 @@ public class AnimalsRepositoryImpl implements AnimalsRepository{
     @PostConstruct
     public void init(){
         animals = createAnimalService.createAnimals();
-    }
-
-    /**
-     * Сеттер для ручного ввода животных
-     * @param animals - входной массив животных
-     */
-    @Override
-    public void setAnimals(Animal[] animals) {
-        this.animals = animals;
     }
 
     /**
