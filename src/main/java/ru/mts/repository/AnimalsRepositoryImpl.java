@@ -100,7 +100,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
-                duplicates.put(entry.getKey().getBreed() + " " + entry.getKey().getName(), entry.getValue() - 1);
+                duplicates.put(entry.getKey().getBreed(), duplicates.getOrDefault(entry.getKey().getBreed(), 0) + entry.getValue() - 1);
             }
         }
         return duplicates;

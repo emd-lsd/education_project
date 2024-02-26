@@ -74,8 +74,8 @@ public class AnimalsRepositoryTest {
         animalsField.setAccessible(true);
         animalsField.set(animalsRepository, duplicateMap);
         Map<String, Integer> result = assertDoesNotThrow(() -> animalsRepository.findDuplicate());
-        assertEquals(1, result.get("Cat Kitty"));
-        assertEquals(1, result.get("Fox Foxie"));
+        assertEquals(1, result.get("Cat"));
+        assertEquals(1, result.get("Fox"));
 
     }
 
