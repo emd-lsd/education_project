@@ -1,7 +1,9 @@
 package ru.mts.repository;
 
 import ru.mtsstarter.animals.Animal;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Map;
+
 
 /**
  * Репозиторий задает функционал поиска животных: родившихся в високосный год
@@ -10,8 +12,8 @@ import java.util.Set;
  * вывод дубликатов животных
  */
 public interface AnimalsRepository {
-    String[] findLeapYearNames();
-    Animal[] findOlderAnimal(int N);
-    Set<Animal> findDuplicate();
+    Map<String, LocalDate> findLeapYearNames();
+    Map<Animal, Integer> findOlderAnimal(int N);
+    Map<String, Integer> findDuplicate();
     void printDuplicate();
 }

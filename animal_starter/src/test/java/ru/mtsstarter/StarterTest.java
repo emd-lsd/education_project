@@ -8,6 +8,8 @@ import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.animals.AnimalFactoryImpl;
 import ru.mtsstarter.service.CreateAnimalService;
 import ru.mtsstarter.service.CreateAnimalServiceImpl;
+import java.util.List;
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = StarterTestConfig.class)
@@ -18,19 +20,22 @@ public class StarterTest {
     @Autowired
     private CreateAnimalServiceImpl animalService;
 
-
     @Test
     @DisplayName("Тест на совпадение количества сгенерированных животных")
     public void testAnimalArrayLength() {
-        Animal[] animals = createAnimalService.createAnimals();
-        assertEquals(10, animals.length);
+        Map<String, List<Animal>> animalMap = createAnimalService.createAnimals();
+        int totalCount = 0;
+        for (List<Animal> animalList : animalMap.values()) {
+            totalCount += animalList.size();
+        }
+        assertEquals(10, totalCount);
     }
 
     @Test
     @DisplayName("Тест на тип животного")
     public void testAnimalType() {
-        Animal[] animals = animalService.createAnimals();
-        assertEquals("Cat", animals[1].getBreed());
+        Map<String, List<Animal>> animalMap = animalService.createAnimals();
+        assertTrue(animalMap.containsKey("CAT"));
     }
 
     @Test
