@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.animals.AnimalFactoryImpl;
-import ru.mtsstarter.service.CreateAnimalService;
 import ru.mtsstarter.service.CreateAnimalServiceImpl;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Тесты стартер-модуля проекта")
 public class StarterTest {
     @Autowired
-    private CreateAnimalService createAnimalService;
-    @Autowired
     private CreateAnimalServiceImpl animalService;
 
     @Test
     @DisplayName("Тест на совпадение количества сгенерированных животных")
     public void testAnimalArrayLength() {
-        Map<String, List<Animal>> animalMap = createAnimalService.createAnimals();
+        Map<String, List<Animal>> animalMap = animalService.createAnimals();
         int totalCount = 0;
         for (List<Animal> animalList : animalMap.values()) {
             totalCount += animalList.size();

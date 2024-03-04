@@ -65,10 +65,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мап животных пуста"));
         if (N <= 0) throw new RuntimeException("Количество лет N должно быть больше 0");
         for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
-            String animalType = entry.getKey();
             List<Animal> animalList = entry.getValue();
             for (Animal animal : animalList) {
-                Optional.ofNullable(animal).orElseThrow(() -> new RuntimeException("В списке животных найден пустой элемент"));
                 int age = Math.abs(Period.between(LocalDate.now(), animal.getBirthDay()).getYears());
                 if (age > N) {
                     olderAnimals.put(animal, age);
@@ -90,14 +88,11 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         Map<String, Integer> duplicates = new HashMap<>();
         Map<Animal, Integer> animalCountMap = new HashMap<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мапа животных пуста"));
-
         for (List<Animal> animalList : animals.values()) {
             for (Animal animal : animalList) {
-                Optional.ofNullable(animal).orElseThrow(() -> new RuntimeException("В списке животных найден пустой элемент"));
                 animalCountMap.put(animal, animalCountMap.getOrDefault(animal, 0) + 1);
             }
         }
-
         for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
             if (entry.getValue() > 1) {
                 duplicates.put(entry.getKey().getBreed(), duplicates.getOrDefault(entry.getKey().getBreed(), 0) + entry.getValue() - 1);

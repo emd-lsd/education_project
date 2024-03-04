@@ -27,7 +27,7 @@ public class ScheduledTask {
         int age = 3;
         Map<Animal, Integer> olderAnimals = animalsRepository.findOlderAnimal(age);
         for (Map.Entry<Animal, Integer> entry : olderAnimals.entrySet()) {
-            System.out.printf("%s Возраст: %s%n", entry.getKey().getName(), entry.getValue());
+            System.out.printf("%s Возраст: %s%n", entry.getKey().toString(), entry.getValue());
         }
         System.out.println("Животные старше " + age + " лет\n");
 

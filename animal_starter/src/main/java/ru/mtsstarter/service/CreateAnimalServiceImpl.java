@@ -49,7 +49,6 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             animal = animalFactory.generateAnimal(animalTypes, generateRandomName());
             animalMap.putIfAbsent(animalTypes.toString(), new ArrayList<>());
             animalMap.get(animalTypes.toString()).add(animal);
-            //System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         System.out.println("Вывод N животных из имплемента\n");
         return animalMap;
