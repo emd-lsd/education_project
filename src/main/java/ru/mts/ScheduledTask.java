@@ -4,8 +4,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mts.repository.AnimalsRepository;
 import ru.mtsstarter.animals.Animal;
-import java.time.format.DateTimeFormatter;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Map;
 
 @Component
 public class ScheduledTask {
@@ -17,21 +17,22 @@ public class ScheduledTask {
     @Scheduled(fixedRate = 5000)
     public void doTask(){
         //вызов findLeapYearNames
-        String[] animalNames = animalsRepository.findLeapYearNames();
-        for (String name : animalNames) {
-            System.out.println(name);
+        Map<String, LocalDate> animalNames = animalsRepository.findLeapYearNames();
+        for (Map.Entry<String, LocalDate> entry : animalNames.entrySet()) {
+            System.out.println(entry.getKey());
         }
         System.out.println("Високосные годы рождений\n");
 
         //вызов findOlderAnimal
-        Animal[] olderAnimals = animalsRepository.findOlderAnimal(3);
-        for (Animal element : olderAnimals) {
-            System.out.printf("%s %s%n", element.getName(), element.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        int age = 3;
+        Map<Animal, Integer> olderAnimals = animalsRepository.findOlderAnimal(age);
+        for (Map.Entry<Animal, Integer> entry : olderAnimals.entrySet()) {
+            System.out.printf("%s Возраст: %s%n", entry.getKey().toString(), entry.getValue());
         }
-        System.out.println("Животные старше N лет\n");
+        System.out.println("Животные старше " + age + " лет\n");
 
         //вызов findDuplicates
-        Set<Animal> duplicates = animalsRepository.findDuplicate();
+        Map<String, Integer> duplicates = animalsRepository.findDuplicate();
 
         //вызов printDuplicate
         animalsRepository.printDuplicate();

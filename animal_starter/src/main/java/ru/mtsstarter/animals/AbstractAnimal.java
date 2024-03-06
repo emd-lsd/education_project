@@ -2,6 +2,7 @@ package ru.mtsstarter.animals;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -58,5 +59,10 @@ public abstract class AbstractAnimal implements Animal {
         if (obj == null || getClass() != obj.getClass()) return false;
         AbstractAnimal that = (AbstractAnimal) obj;
         return Objects.equals(breed, that.breed) && Objects.equals(name, that.name) && Objects.equals(cost, that.cost) && Objects.equals(character, that.character) && Objects.equals(birthDay, that.birthDay);
+    }
+
+    @Override
+    public String toString() {
+        return "Порода " + breed + " имя " + name + " цена " + cost + " характер " + character + " день рождения " + birthDay.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 }

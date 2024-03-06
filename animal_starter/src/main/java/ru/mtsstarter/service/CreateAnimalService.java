@@ -6,6 +6,9 @@ import ru.mtsstarter.animals.AnimalTypes;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Интерфейс CreateAnimalService задает функционал создания животных
@@ -17,20 +20,21 @@ public interface CreateAnimalService {
 
 
     // Дефолтный метод создания 10 уникальных животных через цикл While
-    default Animal[] createAnimals() {
-        ArrayList<Animal> animals = new ArrayList<>();
+    default Map<String, List<Animal>> createAnimals() {
+        Map<String, List<Animal>> animalMap = new HashMap<>();
         int count = 0;
         AnimalFactory animalFactory;
         Animal animal;
         while (count < 10) {
             animalFactory = getFactory();
             animal = animalFactory.generateAnimal(AnimalTypes.DOG, "Puppy");
-            animals.add(count, animal);
+            animalMap.putIfAbsent(AnimalTypes.DOG.toString(), new ArrayList<>());
+            animalMap.get(AnimalTypes.DOG.toString()).add(animal);
             System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             count++;
         }
         System.out.println("\nВывод из интерфейса\n");
-        return animals.toArray(new Animal[0]);
+        return animalMap;
     }
 
     AnimalFactory getFactory();
