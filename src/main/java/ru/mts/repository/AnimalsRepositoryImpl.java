@@ -41,12 +41,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мап животных пуста"));
         return animals.entrySet().stream()
                 .flatMap(entry -> entry.getValue().stream()
-                        .filter(animal -> Optional.ofNullable(animal).isPresent() && animal.getBirthDay().isLeapYear())
-                        .map(animal -> {
-                            String key = entry.getKey() + " " + animal.getName();
-                            return new AbstractMap.SimpleEntry<>(key, animal.getBirthDay());
-                        })
-                ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        .filter(animal -> animal != null && animal.getBirthDay().isLeapYear())
+                        .map(animal -> Map.entry(entry.getKey() + " " + animal.getName(), animal.getBirthDay())))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (existingValue, newValue) -> existingValue)); // при возникновении дубликата по ключу оставляем существующее значение
     }
 

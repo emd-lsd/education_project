@@ -20,7 +20,7 @@ public class ScheduledTask {
     public void doTask(){
         Map<String, LocalDate> animalNames = animalsRepository.findLeapYearNames();
         for (Map.Entry<String, LocalDate> entry : animalNames.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            System.out.printf("%s %s", entry.getKey(), entry.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         System.out.println("Високосные годы рождений\n");
 
@@ -39,15 +39,11 @@ public class ScheduledTask {
         animalsRepository.findAverageAge(animalsRepository.convertMapToList());
 
         List<Animal> animalList = animalsRepository.findOldAndExpensive(animalsRepository.convertMapToList());
-        for(Animal animal : animalList){
-            System.out.printf("%s Дата рождения: %s Стоимость: %s%n", animal.getName(), animal.getBirthDay(), animal.getCost());
-        }
+        animalList.forEach(animal -> System.out.printf("%s Дата рождения: %s Стоимость: %s%n", animal.getName(), animal.getBirthDay(), animal.getCost()));
         System.out.println("Животные старше 5 лет и дороже средней стоимости всех\n");
 
         List<String> lowCosterNames = animalsRepository.findMinConstAnimals(animalsRepository.convertMapToList());
-        for(String name : lowCosterNames){
-            System.out.println(name);
-        }
+        lowCosterNames.forEach(System.out::println);
         System.out.println("Имена самых дешевых животных\n");
     }
 }
