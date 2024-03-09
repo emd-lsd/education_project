@@ -4,12 +4,13 @@ import org.springframework.stereotype.Repository;
 import ru.mtsstarter.animals.Animal;
 import ru.mtsstarter.service.CreateAnimalService;
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Класс реализует методы репозитория по поиску животных: родившихся в високосный год
@@ -37,20 +38,13 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
      */
     @Override
     public Map<String, LocalDate> findLeapYearNames() {
-        Map<String, LocalDate> animalNames = new HashMap<>();
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мап животных пуста"));
-        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
-            String animalType = entry.getKey();
-            List<Animal> animalList = entry.getValue();
-            for (Animal animal : animalList) {
-                Optional.ofNullable(animal).orElseThrow(() -> new RuntimeException("В списке животных найден пустой элемент"));
-                if (animal.getBirthDay().isLeapYear()) {
-                    String key = animalType + " " + animal.getName();
-                    animalNames.put(key, animal.getBirthDay());
-                }
-            }
-        }
-        return animalNames;
+        return animals.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream()
+                        .filter(animal -> animal != null && animal.getBirthDay().isLeapYear())
+                        .map(animal -> Map.entry(entry.getKey() + " " + animal.getName(), animal.getBirthDay())))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (existingValue, newValue) -> existingValue)); // при возникновении дубликата по ключу оставляем существующее значение
     }
 
     /**
@@ -59,24 +53,31 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
      */
     @Override
     public Map<Animal, Integer> findOlderAnimal(int N) {
-        Map<Animal, Integer> olderAnimals = new HashMap<>();
-        int maxAge = 0;
-        Animal oldestAnimal = null;
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мап животных пуста"));
         if (N <= 0) throw new RuntimeException("Количество лет N должно быть больше 0");
-        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
-            List<Animal> animalList = entry.getValue();
-            for (Animal animal : animalList) {
-                int age = Math.abs(Period.between(LocalDate.now(), animal.getBirthDay()).getYears());
-                if (age > N) {
-                    olderAnimals.put(animal, age);
-                } else if (age > maxAge) {
-                    maxAge = age;
-                    oldestAnimal = animal;
-                }
-            }
+        Map<Animal, Integer> olderAnimals = animals.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream())
+                .collect(Collectors.groupingBy(
+                        animal -> animal,
+                        Collectors.mapping(
+                                animal -> Math.abs(Period.between(LocalDate.now(), animal.getBirthDay()).getYears()),
+                                Collectors.reducing(0, Integer::max)
+                        )
+                ))
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() > N)
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue
+                ));
+        if(olderAnimals.isEmpty()){
+            Animal oldestAnimal = animals.entrySet().stream()
+                    .flatMap(entry -> entry.getValue().stream())
+                    .min(Comparator.comparing(animal -> Period.between(LocalDate.now(), animal.getBirthDay()).getYears()))
+                    .orElseThrow(() -> new RuntimeException("Мапа животных пуста"));
+            int age = Math.abs(Period.between(LocalDate.now(), oldestAnimal.getBirthDay()).getYears());
+            olderAnimals.put(oldestAnimal, age);
         }
-        if (olderAnimals.isEmpty()) olderAnimals.put(oldestAnimal, maxAge);
         return olderAnimals;
     }
 
@@ -84,21 +85,15 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
      * @return duplicates - массив животных, у которых есть дубликат
      */
     @Override
-    public Map<String, Integer> findDuplicate() {
-        Map<String, Integer> duplicates = new HashMap<>();
-        Map<Animal, Integer> animalCountMap = new HashMap<>();
+    public Map<String, List<Animal>> findDuplicate() {
         Optional.ofNullable(animals).orElseThrow(() -> new RuntimeException("Мапа животных пуста"));
-        for (List<Animal> animalList : animals.values()) {
-            for (Animal animal : animalList) {
-                animalCountMap.put(animal, animalCountMap.getOrDefault(animal, 0) + 1);
-            }
-        }
-        for (Map.Entry<Animal, Integer> entry : animalCountMap.entrySet()) {
-            if (entry.getValue() > 1) {
-                duplicates.put(entry.getKey().getBreed(), duplicates.getOrDefault(entry.getKey().getBreed(), 0) + entry.getValue() - 1);
-            }
-        }
-        return duplicates;
+        return animals.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        value -> value.getValue().stream()
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream().filter(entry -> entry.getValue() > 1)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList())));
     }
 
     /**
@@ -106,9 +101,75 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
      */
     @Override
     public void printDuplicate() {
-        Map<String, Integer> duplicates = findDuplicate();
-        for (Map.Entry<String, Integer> entry : duplicates.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+        Map<String, List<Animal>> duplicates = findDuplicate();
+        for (Map.Entry<String, List<Animal>> entry : duplicates.entrySet()) {
+            String key = entry.getKey();
+            List<Animal> animalList = entry.getValue();
+            System.out.println("Дубликаты " + key + ": ");
+            for(Animal animal : animalList){
+                System.out.printf("%s %s %s %s %s%n", animal.getName(), animal.getBreed(), animal.getCost(), animal.getCharacter(), animal.getBirthDay().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            }
         }
+    }
+
+    /**
+     *  Метод поиска среднего возраста среди животных
+     * @param animalList список животных на вход
+     * @return возвращает
+     */
+    @Override
+    public Double findAverageAge(List<Animal> animalList) {
+        Optional.ofNullable(animalList).orElseThrow(() -> new RuntimeException("Список животных пуст"));
+        Double averageAge = animalList.stream()
+                .mapToLong(animal -> Math.abs(Period.between(LocalDate.now(), animal.getBirthDay()).getYears()))
+                .average()
+                .orElseThrow(() -> new IllegalArgumentException("Something went wrong"));
+        System.out.println("Средний возраст животных " + averageAge + "\n");
+        return averageAge;
+    }
+
+    /**
+     *  Метод поиска животных, возраст которых больше 5 лет и стоимость которых больше средней стоимости всех животных
+     * @param animalList список животных на вход
+     * @return отсортированный список животных по дню рождения (по возрастанию)
+     */
+    @Override
+    public List<Animal> findOldAndExpensive(List<Animal> animalList) {
+        Optional.ofNullable(animalList).orElseThrow(() -> new RuntimeException("Список животных пуст"));
+        BigDecimal averageCost = animalList.stream()
+                .map(animal -> animal.getCost())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(animalList.size()), 2, BigDecimal.ROUND_HALF_UP);
+        return animalList.stream()
+                .filter(animal -> Math.abs(Period.between(LocalDate.now(), animal.getBirthDay()).getYears()) > 5 && animal.getCost().compareTo(averageCost) > 0)
+                .sorted(Comparator.comparing(Animal::getBirthDay))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *  Метод поиска 3х самых дешевых животных
+     * @param animalList список животных на вход
+     * @return список имен животных в обратном алфавитном порядке на вывод
+     */
+    @Override
+    public List<String> findMinConstAnimals(List<Animal> animalList) {
+        Optional.ofNullable(animalList).orElseThrow(() -> new RuntimeException("Список животных пуст"));
+        return animalList.stream()
+                .sorted(Comparator.comparing(Animal::getCost))
+                .limit(3)
+                .map(Animal::getName)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *  Метод преобразует мапу животных в один список животных
+     * @return общий список животных
+     */
+    @Override
+    public List<Animal> convertMapToList() {
+        return animals.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream())
+                .collect(Collectors.toList());
     }
 }
